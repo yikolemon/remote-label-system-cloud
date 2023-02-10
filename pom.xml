@@ -10,6 +10,8 @@
     <packaging>pom</packaging>
     <modules>
         <module>remote-label-commons</module>
+        <module>remote-label-feign-client</module>
+        <module>remote-label-gateway</module>
         <module>remote-label-label-manage</module>
         <module>remote-label-moniter-register</module>
         <module>remote-label-user</module>
