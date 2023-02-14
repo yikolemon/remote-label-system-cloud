@@ -7,13 +7,13 @@ RFID接收器可以定时采集，获取标签距离信息，通过该信息，�
 * 物品管理：如教室公共设备的维护，防丢失，丢失报警功能。
 
 技术点：
-采用微服务架构，SpringCloud Alibaba+Nacos+SpringCloud Gateway
+采用微服务架构，SpringCloud Alibaba+Nacos+SpringCloud Gateway+Sentinel
 
-中间件：Redis，Mysql，ElasticSearch，ElasticJob，Rabbitmq
+中间件：Redis，Mysql，ElasticSearch，xxjob，Rabbitmq
 
 项目亮点：
 * 使用Netty实现Mqtt协议服务器，实现和硬件通信
-* 使用Elastic Job分布式任务调度框架，实现分布式情况下的定时任务
+* xxjob分布式任务调度框架，实现分布式情况下的定时任务
 
 
 *****
