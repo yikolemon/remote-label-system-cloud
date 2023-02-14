@@ -7,7 +7,7 @@ RFID接收器可以定时采集，获取标签距离信息，通过该信息，�
 * 物品管理：如教室公共设备的维护，防丢失，丢失报警功能。
 
 技术点：
-采用微服务架构，SpringCloud Alibaba+Nacos+SpringCloud Gateway+Sentinel
+采用微服务架构，SpringCloud Alibaba + Nacos+ SpringCloud Gateway + Sentinel
 
 中间件：Redis，Mysql，ElasticSearch，xxjob，Rabbitmq
 

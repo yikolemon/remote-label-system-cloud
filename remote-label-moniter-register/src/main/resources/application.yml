@@ -1,0 +1,17 @@
+server:
+  port: 9002
+
+spring:
+  application:
+    name: remote-label-moniter-register
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+
+#actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
