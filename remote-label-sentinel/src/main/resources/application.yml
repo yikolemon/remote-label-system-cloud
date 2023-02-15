@@ -1,0 +1,22 @@
+server:
+  port: 8999
+
+spring:
+  application:
+    name: remote-label-sentinel
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+    sentinel:
+      transport:
+        dashboard: localhost:8858
+        client-ip: 192.168.96.40
+        #client-ip: 127.0.0.1
+        port: 8719
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
