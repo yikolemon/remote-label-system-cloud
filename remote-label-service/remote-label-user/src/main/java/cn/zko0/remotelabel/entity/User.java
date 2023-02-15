@@ -24,6 +24,17 @@ public class User implements Serializable {
     private Integer userId;
 
     /**
+     * 用户名
+     */
+    private String userName;
+
+    /**
+     * 密码
+     */
+    private String password;
+    private Integer roleId;
+
+    /**
      * 手机号
      */
     private String mobile;
@@ -32,16 +43,6 @@ public class User implements Serializable {
      * 邮箱号
      */
     private String email;
-
-    /**
-     * 密码
-     */
-    private String password;
-
-    /**
-     * 用户名
-     */
-    private String userName;
 
     /**
      * 注册时间
@@ -76,6 +77,30 @@ public class User implements Serializable {
         this.userId = userId;
     }
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Integer getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
+    }
+
     public String getMobile() {
         return mobile;
     }
@@ -90,22 +115,6 @@ public class User implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
     }
 
     public Date getCreateTime() {
@@ -152,10 +161,11 @@ public class User implements Serializable {
     public String toString() {
         return "User{" +
         ", userId = " + userId +
+        ", userName = " + userName +
+        ", password = " + password +
+        ", roleId = " + roleId +
         ", mobile = " + mobile +
         ", email = " + email +
-        ", password = " + password +
-        ", userName = " + userName +
         ", createTime = " + createTime +
         ", isAvaliable = " + isAvaliable +
         ", picImg = " + picImg +

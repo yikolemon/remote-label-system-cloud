@@ -1,5 +1,6 @@
 package cn.zko0.remotelabel.service;
 
+import cn.dev33.satoken.util.SaResult;
 import cn.zko0.remotelabel.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -12,5 +13,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2023-02-15
  */
 public interface UserService extends IService<User> {
+
+    public SaResult doLogin(String username,String password);
 
 }
