@@ -1,8 +1,10 @@
 package cn.zko0.remotelabel.controller;
 
 import cn.dev33.satoken.util.SaResult;
+import cn.zko0.remotelabel.entity.User;
 import cn.zko0.remotelabel.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @description
  */
 @RestController
+@RequestMapping("/user")
 public class LoginController {
 
     @Autowired
@@ -19,10 +22,8 @@ public class LoginController {
 
     // 会话登录接口
     @RequestMapping("/doLogin")
-    public SaResult doLogin(String name, String pwd) {
-        return userService.doLogin(name, pwd);
+    public SaResult doLogin(@RequestBody User user) {
+        return userService.doLogin(user);
     }
-
-
 
 }

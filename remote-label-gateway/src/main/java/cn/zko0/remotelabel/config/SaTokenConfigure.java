@@ -2,6 +2,7 @@ package cn.zko0.remotelabel.config;
 
 import cn.dev33.satoken.reactor.filter.SaReactorFilter;
 import cn.dev33.satoken.router.SaRouter;
+import cn.dev33.satoken.router.SaRouterStaff;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
 import org.springframework.context.annotation.Bean;
@@ -23,8 +24,11 @@ public class SaTokenConfigure {
             //.addExclude("/favicon.ico")
             // 鉴权方法：每次访问进入 
             .setAuth(obj -> {
+                SaRouter.notMatch("/user/doLogin"
+                        ,"/user/sendEmailCode"
+                        ,"/user/doRegister");
                 // 登录校验 -- 拦截所有路由，并排除/user/doLogin 用于开放登录 
-                SaRouter.match("/**", "/user/doLogin", r -> StpUtil.checkLogin());
+                SaRouter.match("/**",r -> StpUtil.checkLogin());
                 SaRouter.match("/admin/**", r -> StpUtil.checkRole("admin"));
             })
             // 异常处理方法：每次setAuth函数出现异常时进入 

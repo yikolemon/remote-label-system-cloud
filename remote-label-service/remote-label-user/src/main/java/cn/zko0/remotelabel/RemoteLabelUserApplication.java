@@ -7,7 +7,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@MapperScan("cn.zko0.remotelabel.ucenter.mapper")
+@MapperScan("cn.zko0.remotelabel.mapper")
 public class RemoteLabelUserApplication {
 
     public static void main(String[] args) {
