@@ -10,7 +10,7 @@ spring:
         server-addr: localhost:8848
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/remotelabel?autoReconnect=true
+    url: jdbc:mysql://127.0.0.1:3306/remote_label_user?autoReconnect=true
     username: root
     password: 123456
   redis:
@@ -32,6 +32,28 @@ spring:
         min-idle: 0
     # 连接超时时间（毫秒）
     timeout: 5000
+  mail:
+    host: smtp.qq.com
+    port: 465
+    username: 212842183@qq.com
+    password: iirzafmmltvsbhfh
+    protocol: smtps
+    properties:
+      mail:
+        smtp:
+          ssl:
+            enable: true
+          socketFactory:
+            port: 465
+            class: javax.net.ssl.SSLSocketFactory
+  rabbitmq:
+    addresses: 127.0.0.1
+    #192.168.56.10
+    username: guest
+    #guest
+    password: guest
+    port: 5672
+
 
 #actuator
 management:
@@ -58,5 +80,3 @@ sa-token:
   token-style: uuid
   # 是否输出操作日志
   is-log: false
-
-

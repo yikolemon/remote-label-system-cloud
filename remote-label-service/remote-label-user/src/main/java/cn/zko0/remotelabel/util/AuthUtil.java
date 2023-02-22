@@ -23,4 +23,5 @@ public class AuthUtil {
         String res = SaSecureUtil.sha256("salt" + temp + "salt");
         return res;
     }
+
 }

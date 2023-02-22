@@ -73,6 +73,9 @@ public class User implements Serializable {
     @TableField(exist = false)
     private String code;
 
+    @TableField(exist = false)
+    private String newPassword;
+
 
     public Boolean getAvaliable() {
         return isAvaliable;
@@ -200,5 +203,13 @@ public class User implements Serializable {
         ", qqOpenid = " + qqOpenid +
         ", wxOpenid = " + wxOpenid +
         "}";
+    }
+
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
     }
 }

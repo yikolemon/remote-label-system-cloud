@@ -18,7 +18,11 @@ public interface UserService extends IService<User> {
 
     public SaResult emailRegister(User user);
 
-    public String sendEmailCode(String email);
+    public String sendRegistEmailCode(String email);
+
+    public String sendResetPwdEmailCode(String email);
+
+    public SaResult resetPassword(User user);
 
 
 }

@@ -22,3 +22,34 @@ RFID接收器可以定时采集，获取标签距离信息，通过该信息，�
 室内进准定位，意味着你可以通过标签的移动和位置，应用在各种各样有趣的场景中。通过对室内布局的设计，你甚至可以记录一天内你在室内的活动轨迹。通过位置信息，提供更有趣的功能。
 如久坐提醒，室内活动距离，打水次数等等等。
 （一套下来的资金需求大概为500元，还是比较实惠的）
+
+*****
+## 环境配置：Docker
+Rabbitmq
+```shell
+docker run -d --hostname rabbitmq --name rabbit -p 15672:15672 -p 5673:5672 rabbitmq
+```
+开启Rabbitmq面板：
+进入Docker容器：
+```shell
+rabbitmq-plugins enable rabbitmq_management
+```
+解决：Stats in management UI are disabled on this node
+进入容器：
+```shell
+docker exec -it rabbitmq /bin/bash
+```
+切到对应目录
+```shell
+cd /etc/rabbitmq/conf.d/
+```
+修改 management_agent.disable_metrics_collector = false
+```shell
+echo management_agent.disable_metrics_collector = false > management_agent.disable_metrics_collector.conf
+```
+重启容器
+
+Nacos
+```shell
+docker run --name nacos-standalone -e MODE=standalone -e JVM_XMS=256m -e JVM_XMX=256m -e JVM_XMN=128m -p 8848:8848 -d nacos/nacos-server
+```

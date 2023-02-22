@@ -10,15 +10,21 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author duanfuqiang
- * @date 2023/2/15 22:50
+ * @date 2023/2/15 22:10
  * @description
  */
 @RestController
 @RequestMapping("/user")
-public class RegisterController {
+public class LoginAndRegisterController {
 
     @Autowired
     private UserService userService;
+
+    // 会话登录接口
+    @RequestMapping("/doLogin")
+    public SaResult doLogin(@RequestBody User user) {
+        return userService.doLogin(user);
+    }
 
     // 会话注册
     @RequestMapping("/doRegister")
@@ -39,6 +45,11 @@ public class RegisterController {
         }else{
             return SaResult.error("邮箱为空");
         }
+    }
+
+    @RequestMapping("/resetPassword")
+    public SaResult resetPassword(@RequestBody User user){
+        return null;
     }
 
 }

@@ -3,10 +3,14 @@ package cn.zko0.remotelabel.service.impl;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
 import cn.zko0.remotelabel.entity.User;
+import cn.zko0.remotelabel.mail.MailRequest;
+import cn.zko0.remotelabel.mapper.RedisMapper;
 import cn.zko0.remotelabel.mapper.UserMapper;
+import cn.zko0.remotelabel.service.SendMailService;
 import cn.zko0.remotelabel.service.UserService;
 import cn.zko0.remotelabel.util.AuthUtil;
 import cn.zko0.remotelabel.util.CodeUtil;
+import cn.zko0.remotelabel.util.RedisKeyUtil;
 import cn.zko0.remotelabel.util.RedisUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -32,13 +36,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private UserMapper userMapper;
 
     @Autowired
-    private RedisUtil redisUtil;
+    private RedisMapper redisMapper;
+
+    @Autowired
+    private SendMailService sendMailService;
 
     @Override
     public SaResult doLogin(User user) {
-        QueryWrapper<User> wrapper = new QueryWrapper<>();
-        wrapper.eq("user_name",user.getUserName());
-        User dbUser = userMapper.selectOne(wrapper);
+        checkUserExist(user.getEmail());
         if (user==null){
             return SaResult.error("用户不存在");
         }else {
@@ -52,21 +57,52 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public String sendEmailCode(String email) {
+    public String sendRegistEmailCode(String email) {
         //发送验证码
-
+        MailRequest mailRequest = new MailRequest();
+        mailRequest.setSendTo(email);
+        mailRequest.setSubject("注册验证码");
         String code = CodeUtil.getCode4();
+        mailRequest.setText(code);
+        sendMailService.sendSimpleMail(mailRequest);
         //保存到redis，设置三分钟超时
-        redisUtil.setCacheObject("checkCode_"+email, code,10, TimeUnit.MINUTES);
+        redisMapper.setRegisterCode(email,code);
         return code;
     }
 
     @Override
+    public String sendResetPwdEmailCode(String email) {
+        //发送验证码
+        MailRequest mailRequest = new MailRequest();
+        mailRequest.setSendTo(email);
+        mailRequest.setSubject("重置密码验证码");
+        String code = CodeUtil.getCode4();
+        mailRequest.setText(code);
+        sendMailService.sendSimpleMail(mailRequest);
+        //保存到redis，设置三分钟超时
+        redisMapper.setResetPwdCode(email,code);
+        return code;
+    }
+
+    @Override
+    public SaResult resetPassword(User user) {
+        String resetPwdCode = redisMapper.getResetPwdCode(user.getEmail());
+        if (resetPwdCode.isEmpty()||!resetPwdCode.equals(user.getCode())){
+            return SaResult.error("验证码错误");
+        }else {
+
+        }
+    }
+
+    @Override
     public SaResult emailRegister(User user) {
-        String redisCode = (String)(redisUtil.getCacheObject("checkCode_" + user.getEmail()));
+        String redisCode = redisMapper.getRegisterCode(user.getEmail());
         String code=user.getCode();
         if (StringUtils.isEmpty(user.getEmail())){
             return SaResult.error("密码不能为空");
+        }
+        if (checkUserExist(user.getEmail())){
+            return SaResult.error("用户已存在");
         }
         if (redisCode.equals(code)){
             userMapper.insert(user);
@@ -75,5 +111,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             return SaResult.error("验证码错误");
         }
     }
+
 
 }
