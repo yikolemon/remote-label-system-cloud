@@ -1,0 +1,22 @@
+package cn.zko0.remotelabel.util;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+/**
+ * @author duanfuqiang
+ * @date 2023/2/22 22:01
+ * @description
+ */
+
+@AllArgsConstructor
+@Getter
+public enum RedisKeyUtil {
+
+
+    REGISTER_CODE_KEY("registCheckCode"),
+    RESET_PWD_CODE_KEY("resetPwdCheckCode");
+
+    private String key;
+
+}
