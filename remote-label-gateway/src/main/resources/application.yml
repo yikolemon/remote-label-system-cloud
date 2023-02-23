@@ -15,7 +15,21 @@ spring:
           uri: lb://remote-label-user
           predicates:
             - Path=/**
-#       - id: payment_route2
+      globalcors:
+        add-to-simple-url-handler-mapping: true
+        cors-configurations:
+          '[/**]': #拦截的请求
+            allowedOrigins: #允许跨域的请求
+              - "http://localhost:8080"
+            allowedMethods: #运行跨域的请求方式
+              - "GET"
+              - "POST"
+              - "DELETE"
+              - "PUT"
+              - "OPTIONS"
+            allowedHeaders: "*" #允许请求中携带的头信息
+            maxAge: 36000 #跨域检测的有效期,单位s
+  #       - id: payment_route2
 #         uri: http://localhost:8001
 #         predicates:
 #           - Path=/payment/lb/** #??,??????????
@@ -41,5 +55,4 @@ spring:
         max-idle: 10
         # 连接池中的最小空闲连接
         min-idle: 0
-
 
