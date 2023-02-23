@@ -12,17 +12,21 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author zko0
  * @since 2023-02-15
  */
-public interface UserService extends IService<User> {
+public interface UserService {
 
     public SaResult doLogin(User user);
 
     public SaResult emailRegister(User user);
 
-    public String sendRegistEmailCode(String email);
+    public String sendRegisterEmailCode(String email);
 
     public String sendResetPwdEmailCode(String email);
 
     public SaResult resetPassword(User user);
+
+    public String getRoleByEmail(String email);
+
+    public String getRoleById(String id);
 
 
 }

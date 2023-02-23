@@ -37,10 +37,20 @@ public class LoginAndRegisterController {
         }
     }
 
-    @RequestMapping("/sendEmailCode")
-    public SaResult sendEmailCode(@RequestBody User user){
+    @RequestMapping("/sendRegistEmailCode")
+    public SaResult sendRegisterEmailCode(@RequestBody User user){
         if (user.getEmail()!=null){
-            userService.sendEmailCode(user.getEmail());
+            userService.sendRegisterEmailCode(user.getEmail());
+            return SaResult.ok("验证码邮件已发送");
+        }else{
+            return SaResult.error("邮箱为空");
+        }
+    }
+
+    @RequestMapping("/sendEmailCode")
+    public SaResult sendResetPwdEmailCode(@RequestBody User user){
+        if (user.getEmail()!=null){
+            userService.sendResetPwdEmailCode(user.getEmail());
             return SaResult.ok("验证码邮件已发送");
         }else{
             return SaResult.error("邮箱为空");
@@ -49,7 +59,12 @@ public class LoginAndRegisterController {
 
     @RequestMapping("/resetPassword")
     public SaResult resetPassword(@RequestBody User user){
-        return null;
+        return userService.resetPassword(user);
+    }
+
+    @RequestMapping("/getRoleByEmail")
+    public String getRoleByEmail(String email){
+        return userService.getRoleByEmail(email);
     }
 
 }

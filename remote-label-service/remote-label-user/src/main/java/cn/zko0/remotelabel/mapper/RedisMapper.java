@@ -2,6 +2,7 @@ package cn.zko0.remotelabel.mapper;
 
 import cn.zko0.remotelabel.util.RedisKeyUtil;
 import cn.zko0.remotelabel.util.RedisUtil;
+import org.apache.ibatis.annotations.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

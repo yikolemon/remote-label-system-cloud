@@ -13,13 +13,25 @@
     <groupId>cn.zko0</groupId>
     <artifactId>remote-label-api</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>remote-label-feign-client</name>
-    <description>remote-label-feign-client</description>
+    <name>remote-label-api</name>
+    <description>remote-label-api</description>
     <properties>
         <java.version>8</java.version>
     </properties>
 
     <packaging>pom</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cn.zko0</groupId>
+            <artifactId>remote-label-commons</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 
 
 </project>

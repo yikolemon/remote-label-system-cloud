@@ -20,6 +20,10 @@ public class SaTokenConfigure {
         return new SaReactorFilter()
             // 拦截地址 
             .addInclude("/**")    /* 拦截全部path */
+            .addExclude("/user/doLogin"
+                        ,"user/sendRegisterEmailCode"
+                        ,"user/doRegister"
+            )
             // 开放地址 
             //.addExclude("/favicon.ico")
             // 鉴权方法：每次访问进入 

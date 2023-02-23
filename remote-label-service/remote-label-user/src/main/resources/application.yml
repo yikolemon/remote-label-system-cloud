@@ -15,11 +15,21 @@ spring:
     password: 123456
   redis:
     # Redis数据库索引（默认为0）
-    database: 0
+    database: 1
     # Redis服务器地址
     host: 127.0.0.1
     # Redis服务器连接端口
     port: 6379
+    lettuce:
+      pool:
+        # 连接池最大连接数
+        max-active: 200
+        # 连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: -1ms
+        # 连接池中的最大空闲连接
+        max-idle: 10
+        # 连接池中的最小空闲连接
+        min-idle: 0
     jedis:
       pool:
         # 连接池最大连接数（使用负值表示没有限制）
@@ -54,15 +64,12 @@ spring:
     password: guest
     port: 5672
 
-
 #actuator
 management:
   endpoints:
     web:
       exposure:
         include: '*'
-
-
 
 ############## Sa-Token 配置 (文档: https://sa-token.cc) ##############
 sa-token:

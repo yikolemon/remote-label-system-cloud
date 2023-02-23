@@ -2,24 +2,22 @@ package cn.zko0.remotelabel.service.impl;
 
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
+import cn.zko0.remotelabel.entity.Role;
 import cn.zko0.remotelabel.entity.User;
 import cn.zko0.remotelabel.mail.MailRequest;
+import cn.zko0.remotelabel.mymapper.MyUserMapper;
 import cn.zko0.remotelabel.mapper.RedisMapper;
+import cn.zko0.remotelabel.mapper.RoleMapper;
 import cn.zko0.remotelabel.mapper.UserMapper;
 import cn.zko0.remotelabel.service.SendMailService;
 import cn.zko0.remotelabel.service.UserService;
 import cn.zko0.remotelabel.util.AuthUtil;
 import cn.zko0.remotelabel.util.CodeUtil;
-import cn.zko0.remotelabel.util.RedisKeyUtil;
-import cn.zko0.remotelabel.util.RedisUtil;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.lang.StringUtils;
+import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 
 /**
  * <p>
@@ -30,10 +28,16 @@ import java.util.concurrent.TimeUnit;
  * @since 2023-02-15
  */
 @Service
-public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private RoleMapper roleMapper;
+
+    @Autowired
+    private MyUserMapper myUserMapper;
 
     @Autowired
     private RedisMapper redisMapper;
@@ -43,8 +47,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public SaResult doLogin(User user) {
-        checkUserExist(user.getEmail());
-        if (user==null){
+        User dbUser = myUserMapper.getUserByEmail(user.getEmail());
+        if (dbUser==null){
             return SaResult.error("用户不存在");
         }else {
             if (AuthUtil.checkPassword(user.getPassword(),dbUser.getPassword())){
@@ -57,7 +61,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public String sendRegistEmailCode(String email) {
+    public String sendRegisterEmailCode(String email) {
         //发送验证码
         MailRequest mailRequest = new MailRequest();
         mailRequest.setSendTo(email);
@@ -90,8 +94,32 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (resetPwdCode.isEmpty()||!resetPwdCode.equals(user.getCode())){
             return SaResult.error("验证码错误");
         }else {
-
+            User dbUser = myUserMapper.getUserByEmail(user.getEmail());
+            if (AuthUtil.checkPassword(user.getNewPassword(),dbUser.getPassword())) {
+                return SaResult.error("新密码不能与原密码相同");
+            }else {
+                //密码加密,放入password中
+                user.setPassword(AuthUtil.encryption(user.getNewPassword()));
+                myUserMapper.updatePwdByEmail(user);
+                return SaResult.ok("密码更新成分");
+            }
         }
+    }
+
+    @Override
+    public String getRoleById(String id) {
+        User dbUser = userMapper.selectById(id);
+        Integer roleId = dbUser.getRoleId();
+        Role role = roleMapper.selectById(roleId);
+        return role.getType();
+    }
+
+    @Override
+    public String getRoleByEmail(String email) {
+        User dbUser = myUserMapper.getUserByEmail(email);
+        Integer roleId = dbUser.getRoleId();
+        Role role = roleMapper.selectById(roleId);
+        return role.getType();
     }
 
     @Override
@@ -99,18 +127,23 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         String redisCode = redisMapper.getRegisterCode(user.getEmail());
         String code=user.getCode();
         if (StringUtils.isEmpty(user.getEmail())){
-            return SaResult.error("密码不能为空");
+            return SaResult.error("邮箱不能为空");
         }
-        if (checkUserExist(user.getEmail())){
+        if (myUserMapper.getUserByEmail(user.getEmail())!=null){
             return SaResult.error("用户已存在");
         }
+        if (user.getPassword()==null){
+            return SaResult.error("密码不能为空");
+        }
         if (redisCode.equals(code)){
+            user.setPassword(AuthUtil.encryption(user.getPassword()));
             userMapper.insert(user);
             return SaResult.ok("注册成功");
         }else {
             return SaResult.error("验证码错误");
         }
     }
+
 
 
 }

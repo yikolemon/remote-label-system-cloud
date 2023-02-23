@@ -9,10 +9,10 @@
 
     <modules>
         <module>remote-label-commons</module>
-        <module>remote-label-api</module>
         <module>remote-label-label-manage</module>
         <module>remote-label-moniter-register</module>
         <module>remote-label-user</module>
+        <module>remote-label-api</module>
     </modules>
 
     <groupId>cn.zko0</groupId>

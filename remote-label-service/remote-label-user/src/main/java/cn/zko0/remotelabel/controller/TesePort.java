@@ -2,24 +2,23 @@ package cn.zko0.remotelabel.controller;
 
 import cn.zko0.remotelabel.entity.User;
 import cn.zko0.remotelabel.mapper.UserMapper;
-import cn.zko0.remotelabel.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class AuthPortController {
+public class TesePort {
 
-    @Autowired
-    private UserService userService;
+    @Value("${server.port}")
+    private String serverPort;
 
     @Autowired
     private UserMapper mapper;
 
-    @GetMapping("/auth/getRoleById")
-    public String getRoleById(String id){
-        return userService.getRoleById(id);
+    @GetMapping("")
+    public String getPort(){
+        return serverPort;
     }
 
 }

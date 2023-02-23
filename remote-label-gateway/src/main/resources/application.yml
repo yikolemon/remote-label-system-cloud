@@ -14,15 +14,15 @@ spring:
           #????????????
           uri: lb://remote-label-user
           predicates:
-            - Path=/user/**
+            - Path=/**
 #       - id: payment_route2
 #         uri: http://localhost:8001
 #         predicates:
 #           - Path=/payment/lb/** #??,??????????
   # redis配置
   redis:
-    database: 1
     # Redis数据库索引（默认为0）
+    database: 1
     # Redis服务器地址
     host: 127.0.0.1
     # Redis服务器连接端口

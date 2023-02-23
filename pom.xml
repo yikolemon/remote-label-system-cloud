@@ -14,7 +14,6 @@
         <module>remote-label-service</module>
         <module>remote-label-sentinel</module>
         <module>remote-label-service/remote-label-user</module>
-        <module>remote-label-service/remote-label-api/remote-label-api-label-user</module>
 
     </modules>
 

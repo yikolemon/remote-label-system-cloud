@@ -10,7 +10,7 @@ import cn.dev33.satoken.secure.SaSecureUtil;
 public class AuthUtil {
 
     public static boolean checkPassword(String webPassword,String dbPassword){
-        return dbPassword==encryption(webPassword);
+        return dbPassword.equals(encryption(webPassword));
     }
 
     /**
