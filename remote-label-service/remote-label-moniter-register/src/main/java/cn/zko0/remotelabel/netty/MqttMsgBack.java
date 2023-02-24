@@ -27,9 +27,9 @@ import io.netty.handler.codec.mqtt.MqttUnsubAckMessage;
 /**
  * 蚂蚁舞
  */
-public class BootNettyMqttMsgBack {
+public class MqttMsgBack {
  
-	private static final Logger log =  LoggerFactory.getLogger(BootNettyMqttMsgBack.class);
+	private static final Logger log =  LoggerFactory.getLogger(MqttMsgBack.class);
 	
 	/**
 	 * 	确认连接请求
@@ -40,15 +40,44 @@ public class BootNettyMqttMsgBack {
 		MqttConnectMessage mqttConnectMessage = (MqttConnectMessage) mqttMessage;
 		MqttFixedHeader mqttFixedHeaderInfo = mqttConnectMessage.fixedHeader();
 		MqttConnectVariableHeader mqttConnectVariableHeaderInfo = mqttConnectMessage.variableHeader();
-		
+
 		//	构建返回报文， 可变报头
 		MqttConnAckVariableHeader mqttConnAckVariableHeaderBack = new MqttConnAckVariableHeader(MqttConnectReturnCode.CONNECTION_ACCEPTED, mqttConnectVariableHeaderInfo.isCleanSession());
 		//	构建返回报文， 固定报头
-		MqttFixedHeader mqttFixedHeaderBack = new MqttFixedHeader(MqttMessageType.CONNACK,mqttFixedHeaderInfo.isDup(), MqttQoS.AT_MOST_ONCE, mqttFixedHeaderInfo.isRetain(), 0x02);
+		MqttFixedHeader mqttFixedHeaderBack = new MqttFixedHeader(MqttMessageType.CONNACK, mqttFixedHeaderInfo.isDup(), MqttQoS.AT_MOST_ONCE, mqttFixedHeaderInfo.isRetain(), 0x02);
 		//	构建CONNACK消息体
 		MqttConnAckMessage connAck = new MqttConnAckMessage(mqttFixedHeaderBack, mqttConnAckVariableHeaderBack);
-		log.info("back--"+connAck.toString());
+		log.info("back--" + connAck.toString());
 		channel.writeAndFlush(connAck);
+	}
+
+	//连接否认
+	public static void connnak(Channel channel,MqttMessage mqttMessage){
+		MqttConnectMessage mqttConnectMessage = (MqttConnectMessage) mqttMessage;
+		MqttFixedHeader mqttFixedHeaderInfo = mqttConnectMessage.fixedHeader();
+		MqttConnectVariableHeader mqttConnectVariableHeaderInfo = mqttConnectMessage.variableHeader();
+		//	构建返回报文， 可变报头
+		MqttConnAckVariableHeader mqttConnAckVariableHeaderBack = new MqttConnAckVariableHeader(MqttConnectReturnCode.CONNECTION_REFUSED_BAD_USER_NAME_OR_PASSWORD, mqttConnectVariableHeaderInfo.isCleanSession());
+		//	构建返回报文， 固定报头
+		MqttFixedHeader mqttFixedHeaderBack = new MqttFixedHeader(MqttMessageType.CONNACK, mqttFixedHeaderInfo.isDup(), MqttQoS.AT_MOST_ONCE, mqttFixedHeaderInfo.isRetain(), 0x02);
+		//	构建CONNACK消息体
+		MqttConnAckMessage connAck = new MqttConnAckMessage(mqttFixedHeaderBack, mqttConnAckVariableHeaderBack);
+		log.info("back--" + connAck.toString());
+		channel.writeAndFlush(connAck);
+	}
+
+	public static void notAuthorized(Channel channel,MqttMessage mqttMessage){
+		MqttConnectMessage mqttConnectMessage = (MqttConnectMessage) mqttMessage;
+		MqttFixedHeader mqttFixedHeaderInfo = mqttConnectMessage.fixedHeader();
+		MqttConnectVariableHeader mqttConnectVariableHeaderInfo = mqttConnectMessage.variableHeader();
+		//	构建返回报文， 可变报头
+		MqttConnAckVariableHeader mqttConnAckVariableHeaderBack = new MqttConnAckVariableHeader(MqttConnectReturnCode.CONNECTION_REFUSED_NOT_AUTHORIZED, mqttConnectVariableHeaderInfo.isCleanSession());
+		//	构建返回报文， 固定报头
+		MqttFixedHeader mqttFixedHeaderBack = new MqttFixedHeader(MqttMessageType.DISCONNECT, mqttFixedHeaderInfo.isDup(), MqttQoS.AT_MOST_ONCE, mqttFixedHeaderInfo.isRetain(), 0x02);
+		//	构建CONNACK消息体
+		MqttConnAckMessage notAuthorizedAck = new MqttConnAckMessage(mqttFixedHeaderBack, mqttConnAckVariableHeaderBack);
+		log.info("back--" + notAuthorizedAck.toString());
+		channel.writeAndFlush(notAuthorizedAck);
 	}
 	
 	/**

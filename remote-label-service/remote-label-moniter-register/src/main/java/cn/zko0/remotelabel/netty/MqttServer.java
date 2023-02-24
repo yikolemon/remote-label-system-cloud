@@ -10,13 +10,21 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.mqtt.MqttDecoder;
 import io.netty.handler.codec.mqtt.MqttEncoder;
 import io.netty.handler.timeout.IdleStateHandler;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-public class BootNettyMqttServer {
+@Component
+public class MqttServer {
+
  
 	private NioEventLoopGroup bossGroup;
  
 	private NioEventLoopGroup workGroup;
- 
+
+	@Autowired
+	private MqttChannelInboundHandler mqttChannelInboundHandler;
+
+
 	/**
 	 * 	启动服务
 	 */
@@ -46,7 +54,7 @@ public class BootNettyMqttServer {
 							channelPipeline.addLast(new IdleStateHandler(600, 600, 1200));
 							channelPipeline.addLast("encoder", MqttEncoder.INSTANCE);
 							channelPipeline.addLast("decoder", new MqttDecoder());
-							channelPipeline.addLast(new BootNettyMqttChannelInboundHandler());
+							channelPipeline.addLast(mqttChannelInboundHandler);
 						}
 					});
 			ChannelFuture f = bootstrap.bind(port).sync();

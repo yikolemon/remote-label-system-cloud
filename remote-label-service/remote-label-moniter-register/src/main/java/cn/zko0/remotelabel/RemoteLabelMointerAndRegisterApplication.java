@@ -1,6 +1,8 @@
 package cn.zko0.remotelabel;
 
-import cn.zko0.remotelabel.netty.BootNettyMqttServerThread;
+import cn.zko0.remotelabel.netty.MqttServerThread;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,6 +15,12 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableFeignClients //激活feign
 public class RemoteLabelMointerAndRegisterApplication implements CommandLineRunner {
 
+    @Autowired
+    private MqttServerThread mqttServerThread;
+
+    @Value("${mqtt.server.status}")
+    private String mqttStatus;
+
     public static void main(String[] args) {
         SpringApplication app = new SpringApplication(RemoteLabelMointerAndRegisterApplication.class);
         app.run(args);
@@ -20,10 +28,10 @@ public class RemoteLabelMointerAndRegisterApplication implements CommandLineRunn
 
     @Override
     public void run(String... args) throws Exception {
-        // 启动  1883
-        int port = 1883;
-        BootNettyMqttServerThread bootNettyMqttServerThread = new BootNettyMqttServerThread(port);
-        bootNettyMqttServerThread.start();
+        //on会被@Value自动转化为true
+        if ("true".equals(mqttStatus)){
+            mqttServerThread.start();
+        }
     }
 
 }

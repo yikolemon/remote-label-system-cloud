@@ -15,7 +15,9 @@ public enum RedisKeyUtil {
 
 
     REGISTER_CODE_KEY("registCheckCode"),
-    RESET_PWD_CODE_KEY("resetPwdCheckCode");
+    RESET_PWD_CODE_KEY("resetPwdCheckCode"),
+
+    NETTY_CLIENT_ID_KEY("nettyClientId");
 
     private String key;
 
