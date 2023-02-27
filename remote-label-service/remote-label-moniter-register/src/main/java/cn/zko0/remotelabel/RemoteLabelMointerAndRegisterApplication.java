@@ -18,7 +18,7 @@ public class RemoteLabelMointerAndRegisterApplication implements CommandLineRunn
     @Autowired
     private MqttServerThread mqttServerThread;
 
-    @Value("${mqtt.server.status}")
+    @Value("${mqtt.status}")
     private String mqttStatus;
 
     public static void main(String[] args) {

@@ -63,7 +63,7 @@
 
         <dependency>
             <groupId>cn.zko0</groupId>
-            <artifactId>remote-label-api-label-user</artifactId>
+            <artifactId>remote-label-api-user</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <scope>compile</scope>
             <exclusions>

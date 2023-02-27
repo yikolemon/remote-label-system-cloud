@@ -2,7 +2,8 @@ package cn.zko0.remotelabel.netty;
 
 
 
-import cn.zko0.remotelabel.netty.service.MessageProcessService;
+import cn.zko0.remotelabel.netty.service.CollectorLoginService;
+import cn.zko0.remotelabel.netty.service.LabelService;
 import io.netty.channel.*;
 import io.netty.handler.codec.mqtt.*;
 import java.io.IOException;
@@ -21,10 +22,10 @@ import org.springframework.stereotype.Component;
 public class MqttChannelInboundHandler extends ChannelInboundHandlerAdapter {
 
     @Autowired
-    private MessageProcessService messageProcessService;
+    private CollectorLoginService collectorLoginService;
 
-
-
+    @Autowired
+    private LabelService labelService;
 
     /**
      * 	从客户端收到新的数据时，这个方法会在收到消息时被调用
@@ -40,37 +41,12 @@ public class MqttChannelInboundHandler extends ChannelInboundHandlerAdapter {
             if(mqttFixedHeader.messageType().equals(MqttMessageType.CONNECT)) {
                 //创建closeFuture,处理下线操作
                 //登录验证
-                if (messageProcessService.login(channel,mqttMessage)) {
-                    //验证成功
-                    //	在一个网络连接上，客户端只能发送一次CONNECT报文。服务端必须将客户端发送的第二个CONNECT报文当作协议违规处理并断开客户端的连接
-                    //	to do 建议connect消息单独处理，用来对客户端进行认证管理等 这里直接返回一个CONNACK消息
-                    MqttMsgBack.connack(channel, mqttMessage);
-                } else {
-                    //conn nak认证失败，连接拒绝
-                    MqttMsgBack.connnak(channel, mqttMessage);
-                }
-                // 2. 异步处理，异步处理，上面真正执行关闭channel的EventLoop线程 成功关闭channel后就会调用这里面的方法
-                ChannelFuture channelFuture = channel.closeFuture();
-                //channel关闭监听器，处理登出操作
-                channelFuture.addListener(new ChannelFutureListener() {
-                    @Override
-                    public void operationComplete(ChannelFuture channelFuture) throws Exception {
-                        String clientId =(String) channelFuture.channel().attr(AttributeKey.valueOf("clientId")).get();
-                        messageProcessService.offLine(clientId);
-                    }
-                });
+                collectorLoginService.connectHandler(channel,mqttMessage);
             }
-//            }else {
-//                //checkLogin
-//                if (!messageProcessService.checkOnline(mqttMessage)) {
-//                    //没有登录，返回错误
-//                    MqttMsgBack.notAuthorized(channel,mqttMessage);
-//                }
-//            }
             switch (mqttFixedHeader.messageType()){
                 case PUBLISH:		//	客户端发布消息
                 	//	PUBACK报文是对QoS 1等级的PUBLISH报文的响应
-                    messageProcessService.handlePublish(mqttMessage);
+                    labelService.publishHandler(channel,mqttMessage);
                 	MqttMsgBack.puback(channel, mqttMessage);
                     break;
                 case PUBREL:		//	发布释放
@@ -95,8 +71,8 @@ public class MqttChannelInboundHandler extends ChannelInboundHandlerAdapter {
                 	//	客户端发送PINGREQ报文给服务端的
                 	//	在没有任何其它控制报文从客户端发给服务的时，告知服务端客户端还活着
                 	//	请求服务端发送 响应确认它还活着，使用网络以确认网络连接没有断开
-                    messageProcessService.extendOlinePermession(channel,mqttMessage);
-                	MqttMsgBack.pingresp(channel, mqttMessage);
+                    collectorLoginService.extendOlinePermession(channel,mqttMessage);
+                	MqttMsgBack.pingresp(channel);
                     break;
                 case DISCONNECT:	//	客户端主动断开连接
                 	//	DISCONNECT报文是客户端发给服务端的最后一个控制报文， 服务端必须验证所有的保留位都被设置为0

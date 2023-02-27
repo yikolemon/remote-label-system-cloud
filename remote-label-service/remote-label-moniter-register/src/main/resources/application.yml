@@ -37,8 +37,7 @@ management:
         include: '*'
 
 mqtt:
-  port: 1884
+  status: on
+  port: 7777
   userName: root
   password: 123456
-  server:
-    status: on

@@ -1,7 +1,7 @@
 package cn.zko0.remotelabel.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * <p>
@@ -9,22 +9,42 @@ import java.io.Serializable;
  * </p>
  *
  * @author 
- * @since 2023-02-23
+ * @since 2023-02-27
  */
-@TableName("user_space")
 public class Space implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private Integer userId;
+
+    /**
+     * 空间id
+     */
     private Integer spaceId;
 
-    public Integer getUserId() {
-        return userId;
-    }
+    /**
+     * 空间名称
+     */
+    private String spaceName;
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
+    /**
+     * 创建人
+     */
+    private String createBy;
+
+    /**
+     * 创建时间
+     */
+    private Date createTime;
+
+    /**
+     * 更新人
+     */
+    private String updateBy;
+
+    /**
+     * 更新时间
+     */
+    private Date updateTime;
+    private Boolean isNotice;
 
     public Integer getSpaceId() {
         return spaceId;
@@ -34,11 +54,64 @@ public class Space implements Serializable {
         this.spaceId = spaceId;
     }
 
+    public String getSpaceName() {
+        return spaceName;
+    }
+
+    public void setSpaceName(String spaceName) {
+        this.spaceName = spaceName;
+    }
+
+    public String getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getUpdateBy() {
+        return updateBy;
+    }
+
+    public void setUpdateBy(String updateBy) {
+        this.updateBy = updateBy;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public Boolean getIsNotice() {
+        return isNotice;
+    }
+
+    public void setIsNotice(Boolean isNotice) {
+        this.isNotice = isNotice;
+    }
+
     @Override
     public String toString() {
         return "Space{" +
-        ", userId = " + userId +
         ", spaceId = " + spaceId +
+        ", spaceName = " + spaceName +
+        ", createBy = " + createBy +
+        ", createTime = " + createTime +
+        ", updateBy = " + updateBy +
+        ", updateTime = " + updateTime +
+        ", isNotice = " + isNotice +
         "}";
     }
 }

@@ -7,10 +7,10 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>remote-label-api-label-user</artifactId>
+    <artifactId>remote-label-api-user</artifactId>
     <packaging>jar</packaging>
 
-    <name>remote-label-api-label-user</name>
+    <name>remote-label-api-user</name>
     <url>http://maven.apache.org</url>
 
     <properties>

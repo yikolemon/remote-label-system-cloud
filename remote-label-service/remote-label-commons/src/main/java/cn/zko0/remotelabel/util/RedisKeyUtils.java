@@ -11,7 +11,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public enum RedisKeyUtil {
+public enum RedisKeyUtils {
 
 
     REGISTER_CODE_KEY("registCheckCode"),

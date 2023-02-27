@@ -4,26 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.ByteBufAllocator;
+import io.netty.handler.codec.mqtt.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import io.netty.channel.Channel;
-import io.netty.handler.codec.mqtt.MqttConnAckMessage;
-import io.netty.handler.codec.mqtt.MqttConnAckVariableHeader;
-import io.netty.handler.codec.mqtt.MqttConnectMessage;
-import io.netty.handler.codec.mqtt.MqttConnectReturnCode;
-import io.netty.handler.codec.mqtt.MqttConnectVariableHeader;
-import io.netty.handler.codec.mqtt.MqttFixedHeader;
-import io.netty.handler.codec.mqtt.MqttMessage;
-import io.netty.handler.codec.mqtt.MqttMessageIdVariableHeader;
-import io.netty.handler.codec.mqtt.MqttMessageType;
-import io.netty.handler.codec.mqtt.MqttPubAckMessage;
-import io.netty.handler.codec.mqtt.MqttPublishMessage;
-import io.netty.handler.codec.mqtt.MqttQoS;
-import io.netty.handler.codec.mqtt.MqttSubAckMessage;
-import io.netty.handler.codec.mqtt.MqttSubAckPayload;
-import io.netty.handler.codec.mqtt.MqttSubscribeMessage;
-import io.netty.handler.codec.mqtt.MqttUnsubAckMessage;
- 
+
 /**
  * 蚂蚁舞
  */
@@ -183,15 +171,22 @@ public class MqttMsgBack {
 	/**
 	 * 	心跳响应
 	 * @param channel
-	 * @param mqttMessage
 	 */
-	public static void pingresp (Channel channel, MqttMessage mqttMessage) {
+	public static void pingresp (Channel channel) {
 		//	心跳响应报文	11010000 00000000  固定报文
 		MqttFixedHeader fixedHeader = new MqttFixedHeader(MqttMessageType.PINGRESP, false, MqttQoS.AT_MOST_ONCE, false, 0);
 		MqttMessage mqttMessageBack = new MqttMessage(fixedHeader);
 		log.info("back--"+mqttMessageBack.toString());
 		channel.writeAndFlush(mqttMessageBack);
 	}
-	
+
+	public static void publish(Channel channel,String topic,String msg){
+		MqttFixedHeader fixedHeader = new MqttFixedHeader(MqttMessageType.PUBLISH, false, MqttQoS.AT_MOST_ONCE, false, 0x02);
+		MqttPublishVariableHeader variableHeader = new MqttPublishVariableHeader(topic, 9999);
+		ByteBuf buffer = ByteBufAllocator.DEFAULT.buffer();
+		buffer.writeBytes(msg.getBytes());
+		MqttPublishMessage backMqttMsg=new MqttPublishMessage(fixedHeader,variableHeader,buffer);
+		channel.writeAndFlush(backMqttMsg);
+	}
 	
 }

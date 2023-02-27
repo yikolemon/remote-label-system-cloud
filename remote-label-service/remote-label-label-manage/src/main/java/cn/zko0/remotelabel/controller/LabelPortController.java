@@ -10,7 +10,7 @@ public class LabelPortController {
     @Value("${server.port}")
     private String serverPort;
 
-    @GetMapping("")
+    @GetMapping("/getPort")
     public String getPort(){
         return "nacos registry, serverPort: " + serverPort;
     }

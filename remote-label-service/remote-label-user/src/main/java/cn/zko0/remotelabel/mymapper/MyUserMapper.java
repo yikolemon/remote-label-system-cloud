@@ -29,4 +29,5 @@ public class MyUserMapper {
         wrapper.eq("email",email);
         userMapper.update(user,wrapper);
     }
+
 }

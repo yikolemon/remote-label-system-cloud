@@ -1,8 +1,7 @@
 package cn.zko0.remotelabel.mapper;
 
-import cn.zko0.remotelabel.util.RedisKeyUtil;
-import cn.zko0.remotelabel.util.RedisUtil;
-import org.apache.ibatis.annotations.Mapper;
+import cn.zko0.remotelabel.util.RedisKeyUtils;
+import cn.zko0.remotelabel.util.RedisUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,22 +16,22 @@ import java.util.concurrent.TimeUnit;
 public class RedisMapper {
 
     @Autowired
-    private RedisUtil redisUtil;
+    private RedisUtils redisUtils;
 
     public String getRegisterCode(String email){
-        return redisUtil.getCacheObject(RedisKeyUtil.REGISTER_CODE_KEY.getKey()+":"+email);
+        return redisUtils.getCacheObject(RedisKeyUtils.REGISTER_CODE_KEY.getKey()+":"+email);
     }
 
     public void setRegisterCode(String email,String code){
-        redisUtil.setCacheObject(RedisKeyUtil.REGISTER_CODE_KEY.getKey()+":"+email, code,10, TimeUnit.MINUTES);
+        redisUtils.setCacheObject(RedisKeyUtils.REGISTER_CODE_KEY.getKey()+":"+email, code,10, TimeUnit.MINUTES);
     }
 
     public String getResetPwdCode(String email){
-        return redisUtil.getCacheObject(RedisKeyUtil.RESET_PWD_CODE_KEY.getKey()+":"+email);
+        return redisUtils.getCacheObject(RedisKeyUtils.RESET_PWD_CODE_KEY.getKey()+":"+email);
     }
 
     public void setResetPwdCode(String email,String code){
-        redisUtil.setCacheObject(RedisKeyUtil.RESET_PWD_CODE_KEY.getKey()+":"+email, code,10, TimeUnit.MINUTES);
+        redisUtils.setCacheObject(RedisKeyUtils.RESET_PWD_CODE_KEY.getKey()+":"+email, code,10, TimeUnit.MINUTES);
     }
 
 }

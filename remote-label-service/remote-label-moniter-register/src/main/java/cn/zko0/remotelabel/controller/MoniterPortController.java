@@ -1,5 +1,6 @@
 package cn.zko0.remotelabel.controller;
 
+import cn.zko0.remotelabel.feign.CollectorFeign;
 import cn.zko0.remotelabel.service.TestFeignService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,8 +12,11 @@ import javax.annotation.Resource;
 @RestController
 public class MoniterPortController {
 
+//    @Resource
+//    private TestFeignService testFeignService;
+
     @Resource
-    private TestFeignService testFeignService;
+    private CollectorFeign collectorFeign;
     
     @Value("${server.port}")
     private String serverPort;
@@ -24,7 +28,10 @@ public class MoniterPortController {
 
     @GetMapping("/testFeign")
     public String testFeign(){
-        return testFeignService.getOtherPort();
+        boolean exist = collectorFeign.getExist(String.valueOf(1));
+        return String.valueOf(exist);
+//        return testFeignService.getOtherPort();
     }
+
  
 }
