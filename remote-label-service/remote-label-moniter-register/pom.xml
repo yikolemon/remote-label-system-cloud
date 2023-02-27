@@ -81,11 +81,11 @@
             <scope>compile</scope>
         </dependency>
 
-<!--        &lt;!&ndash;rabbitmq&ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-amqp</artifactId>-->
-<!--        </dependency>-->
+        <!--rabbitmq-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
 
                 <!--代码生成器-->
                 <dependency>

@@ -34,7 +34,7 @@ RFID接收器可以定时采集，获取标签距离信息，通过该信息，�
 ## 环境配置：Docker
 Rabbitmq
 ```shell
-docker run -d --hostname rabbitmq --name rabbit -p 15672:15672 -p 5673:5672 rabbitmq
+docker run -d --hostname rabbitmq --name rabbit -p 15672:15672 -p 5672:5672 rabbitmq
 ```
 开启Rabbitmq面板：
 进入Docker容器：

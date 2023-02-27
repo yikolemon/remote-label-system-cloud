@@ -27,7 +27,11 @@ spring:
         min-idle: 0
     # 连接超时时间（毫秒）
     timeout: 5000
-
+  rabbitmq:
+    addresses: localhost
+    username: root
+    port: 5672
+    password: 1234
 
 #actuator
 management:
