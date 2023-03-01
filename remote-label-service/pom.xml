@@ -13,6 +13,7 @@
         <module>remote-label-moniter-register</module>
         <module>remote-label-user</module>
         <module>remote-label-api</module>
+        <module>remote-label-data-handler</module>
     </modules>
 
     <groupId>cn.zko0</groupId>

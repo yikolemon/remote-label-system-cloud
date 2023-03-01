@@ -1,4 +1,4 @@
-# 远程RFID标签系统
+﻿# 远程RFID标签系统
 
 该工程主要功能为标签管理。标签通过远程RFID接收器识别，定时采集发送到服务器，服务器对标签进行管理。
 
@@ -9,11 +9,14 @@ RFID接收器可以定时采集，获取标签距离信息，通过该信息，�
 技术点：
 采用微服务架构，SpringCloud Alibaba + Nacos+ SpringCloud Gateway + Sentinel
 
-中间件：Redis，Mysql，ElasticSearch，xxjob，Rabbitmq
+中间件：Redis，Mysql，Rabbitmq
 
 项目亮点：
 * 使用Netty实现Mqtt协议服务器，实现和硬件通信
-* xxjob分布式任务调度框架，实现分布式情况下的定时任务
+
+项目架构图：
+
+![架构图](https://img2023.cnblogs.com/blog/2418751/202303/2418751-20230301162714513-1719517641.jpg)
 
 *****
 ## 工程问题

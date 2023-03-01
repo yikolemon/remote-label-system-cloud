@@ -1,0 +1,58 @@
+server:
+  port: 9010
+
+spring:
+  application:
+    name: remote-label-data-handler
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+  rabbitmq:
+    addresses: localhost
+    username: root
+    port: 5672
+    password: 1234
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/remote_label_monitor?autoReconnect=true
+    username: root
+    password: 123456
+#actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+xxl:
+  job:
+    executor:
+      appname: xxl-job-executor-sample
+      address:
+      ip: 127.0.0.1
+      port: 9999
+      logpath: /data/applogs/xxl-job/jobhandler
+      logretentiondays: 30
+    accessToken: default_token
+    admin:
+      addresses: http://127.0.0.1:8080/xxl-job-admin
+
+#
+#### xxl-job admin address list, such as "http://address" or "http://address01,http://address02"
+#  xxl.job.admin.addresses=http://127.0.0.1:8080/xxl-job-admin
+#
+#  ### xxl-job, access token
+#  xxl.job.accessToken=default_token
+#
+#  ### xxl-job executor appname
+#  xxl.job.executor.appname=xxl-job-executor-sample
+#  ### xxl-job executor registry-address: default use address to registry , otherwise use ip:port if address is null
+#  xxl.job.executor.address=
+#  ### xxl-job executor server-info
+#  xxl.job.executor.ip=
+#  xxl.job.executor.port=9999
+#  ### xxl-job executor log-path
+#  xxl.job.executor.logpath=/data/applogs/xxl-job/jobhandler
+#  ### xxl-job executor log-retention-days
+#  xxl.job.executor.logretentiondays=30

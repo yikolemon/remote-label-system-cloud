@@ -10,10 +10,10 @@
     <packaging>pom</packaging>
     <modules>
 
+        <module>remote-label-xxl-job-admin</module>
         <module>remote-label-gateway</module>
         <module>remote-label-service</module>
         <module>remote-label-sentinel</module>
-        <module>remote-label-service/remote-label-user</module>
 
     </modules>
 

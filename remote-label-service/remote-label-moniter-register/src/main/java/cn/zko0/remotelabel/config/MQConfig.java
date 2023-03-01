@@ -1,5 +1,6 @@
 package cn.zko0.remotelabel.config;
 
+import cn.zko0.remotelabel.util.MQUtils;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
@@ -19,11 +20,11 @@ import java.util.Map;
 public class MQConfig {
 
     //普通交换机名称
-    public static final String  LABEL_REPORT_EXCHANGE="labelReportExchange";
+    public static final String  LABEL_REPORT_EXCHANGE= MQUtils.LABEL_REPORT_EXCHANGE;
     //普通队列名称
-    public static final String  LABEL_REPORT_QUEUE="labelReportQueue";
+    public static final String  LABEL_REPORT_QUEUE=MQUtils.LABEL_REPORT_QUEUE;
 
-    public static final String routingKey="key";
+    public static final String routingKey=MQUtils.routingKey;
 
     @Bean("labelReportExchange")
     public DirectExchange exchangeA(){

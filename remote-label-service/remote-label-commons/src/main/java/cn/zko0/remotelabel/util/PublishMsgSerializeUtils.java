@@ -1,6 +1,6 @@
 package cn.zko0.remotelabel.util;
 
-import cn.zko0.remotelabel.vo.PublishResponse;
+import cn.zko0.remotelabel.vo.PublishRequest;
 import com.alibaba.fastjson.JSON;
 
 /**
@@ -10,12 +10,12 @@ import com.alibaba.fastjson.JSON;
  */
 public class PublishMsgSerializeUtils {
 
-    public static PublishResponse json2Obj(String json){
-        return JSON.parseObject(json, PublishResponse.class);
+    public static PublishRequest json2Obj(String json){
+        return JSON.parseObject(json, PublishRequest.class);
     }
 
-    public static String obj2Json(PublishResponse publishResponse){
-        return JSON.toJSONString(publishResponse);
+    public static String obj2Json(PublishRequest publishRequest){
+        return JSON.toJSONString(publishRequest);
     }
 
 

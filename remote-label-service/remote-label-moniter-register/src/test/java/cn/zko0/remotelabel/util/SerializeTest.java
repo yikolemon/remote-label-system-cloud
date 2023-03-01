@@ -1,6 +1,6 @@
 package cn.zko0.remotelabel.util;
 
-import cn.zko0.remotelabel.vo.PublishResponse;
+import cn.zko0.remotelabel.vo.PublishRequest;
 import com.alibaba.fastjson.JSON;
 import org.junit.Test;
 
@@ -18,8 +18,8 @@ public class SerializeTest {
         HashMap<String, String> map = new HashMap<>();
         map.put("msgType","0");
         String s = JSON.toJSONString(map);
-        PublishResponse publishResponse = JSON.parseObject(s, PublishResponse.class);
-        System.out.println(publishResponse);
+        PublishRequest publishRequest = JSON.parseObject(s, PublishRequest.class);
+        System.out.println(publishRequest);
     }
 
 }

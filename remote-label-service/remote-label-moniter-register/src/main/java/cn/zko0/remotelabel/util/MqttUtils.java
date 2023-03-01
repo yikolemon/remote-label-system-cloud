@@ -1,6 +1,6 @@
 package cn.zko0.remotelabel.util;
 
-import cn.zko0.remotelabel.vo.PublishResponse;
+import cn.zko0.remotelabel.vo.PublishRequest;
 import io.netty.buffer.ByteBuf;
 import io.netty.handler.codec.mqtt.MqttMessage;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +19,7 @@ public class MqttUtils {
         return new String(arr);
     }
 
-    public static PublishResponse genObjByPublishMessage(MqttMessage mqttMessage){
+    public static PublishRequest genObjByPublishMessage(MqttMessage mqttMessage){
         try {
             ByteBuf content = (ByteBuf) mqttMessage.payload();
             byte[] arr=new byte[content.capacity()];
