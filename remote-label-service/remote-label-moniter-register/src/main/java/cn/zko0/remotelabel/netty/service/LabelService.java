@@ -11,6 +11,7 @@ import cn.zko0.remotelabel.vo.PublishRequest;
 import com.alibaba.fastjson.JSON;
 import io.netty.channel.Channel;
 import io.netty.handler.codec.mqtt.MqttMessage;
+import io.netty.handler.codec.mqtt.MqttPublishVariableHeader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -33,6 +34,9 @@ public class LabelService {
 
     //处理publish消息,返回处理后的结果消息
     public void publishHandler(Channel channel,MqttMessage mqttMessage){
+        MqttPublishVariableHeader variableHeader = (MqttPublishVariableHeader)mqttMessage.variableHeader();
+        String topicName = variableHeader.topicName();
+
 
         //debug测试回发
         PublishRequest publishRequest = MqttUtils.genObjByPublishMessage(mqttMessage);

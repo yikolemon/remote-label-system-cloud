@@ -15,7 +15,6 @@ public class PublishResponse implements Serializable {
 
     //201,注册成功
     private Integer code;
-
     public PublishResponse(TerminalResponseCode terminalResponseCode) {
         this.code = terminalResponseCode.getCode();
     }

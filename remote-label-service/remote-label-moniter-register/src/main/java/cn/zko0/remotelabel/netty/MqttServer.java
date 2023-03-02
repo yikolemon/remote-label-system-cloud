@@ -24,7 +24,6 @@ public class MqttServer {
 	@Autowired
 	private MqttChannelInboundHandler mqttChannelInboundHandler;
 
-
 	/**
 	 * 	启动服务
 	 */

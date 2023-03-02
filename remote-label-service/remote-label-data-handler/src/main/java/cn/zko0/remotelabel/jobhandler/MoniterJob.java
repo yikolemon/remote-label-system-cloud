@@ -1,8 +1,12 @@
 package cn.zko0.remotelabel.jobhandler;
 
+import cn.zko0.remotelabel.service.NoticeLogService;
+import cn.zko0.remotelabel.service.RecordService;
+import cn.zko0.remotelabel.service.SpaceStatusService;
 import com.xxl.job.core.context.XxlJobHelper;
 import com.xxl.job.core.handler.annotation.XxlJob;
 import groovy.util.logging.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.TimeUnit;
@@ -17,18 +21,21 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class MoniterJob {
 
+    @Autowired
+    private NoticeLogService noticeLogService;
+
+    @Autowired
+    private RecordService recordService;
+
+    @Autowired
+    private SpaceStatusService spaceStatusService;
+
     /**
      * 1、简单任务示例（Bean模式）
      */
     @XxlJob("testHandler")
     public void demoJobHandler() throws Exception {
-        XxlJobHelper.log("XXL-JOB, Hello World.");
 
-        for (int i = 0; i < 5; i++) {
-            XxlJobHelper.log("beat at:" + i);
-            TimeUnit.SECONDS.sleep(2);
-        }
-        // default success
     }
 
 }

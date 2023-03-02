@@ -28,7 +28,7 @@ management:
 xxl:
   job:
     executor:
-      appname: xxl-job-executor-sample
+      appname: data-handler
       address:
       ip: 127.0.0.1
       port: 9999
@@ -36,7 +36,7 @@ xxl:
       logretentiondays: 30
     accessToken: default_token
     admin:
-      addresses: http://127.0.0.1:8080/xxl-job-admin
+      addresses: http://127.0.0.1:8000/xxl-job-admin
 
 #
 #### xxl-job admin address list, such as "http://address" or "http://address01,http://address02"
