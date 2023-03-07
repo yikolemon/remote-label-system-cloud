@@ -15,20 +15,11 @@ import java.util.List;
 @Data
 public class PublishRequest implements Serializable {
 
-    //0:注册，1:监控
-    private Integer msgType;
 
     //设备列表
     private List<Label> labelList;
 
     private Date reportTime;
 
-    public boolean isRegisterMsg(){
-        return msgType.equals(0);
-    }
-
-    public boolean isMonitorMsg(){
-        return msgType.equals(1);
-    }
 
 }
